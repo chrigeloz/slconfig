@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<!--    
+        *******************************************************************
+        Created by Christian Blunschi, StayLinked Corporation.
+        For comments or enquiries, please contact christian@staylinked.com
+        *******************************************************************
+-->
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editable Field</title>
+    <link rel="shortcut icon" href="https://www.staylinked.com/hs-fs/hub/410337/file-1410037798-ico/images/master-page-favicon.ico">
+    <style>
+        #editable-field {
+            width: 100%;
+            height: 24em;
+            resize: vertical;
+            overflow-y: scroll;
+            font-family: monospace;
+            /* Use monospace font for consistent spacing */
+        }
+
+        td {
+            width: 50%;
+            vertical-align: top;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        button {
+            width: 75%;
+            height: 20px;
+            text-align: left;
+        }
+
+        label {
+            width: 100px;
+            font-family: monospace;
+        }
+
+        input {
+            margin: 0.4rem;
+            width: 150px;
+        }
+
+        #color {
+            width: 150px;
+            resize: none;
+            height: 25px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <table>
+        <tr>
+            <td>
+                <p>Layout</p>
+                <button class="insert-button" data-insertion-text='<Keyboard xmlns:android="http://schemas.android.com/apk/res/android" android:keyWidth="10%p" android:horizontalGap="1%p" android:verticalGap="1%p" android:keyHeight="8%p"></Keyboard>'>Keyboard</button><br>
+                <button class="insert-button" data-insertion-text="<Row></Row>">Row</button><br>
+                <button class="insert-button" data-insertion-text='<Key android:keyLabel="1"/>'>Simple Key</button><br>
+
+            </td>
+
+            <td>
+                <p>Style</p>
+                <button class="insert-button" data-insertion-text='android:keyBackground="#00ddff"'>android:keyBackground="#00ddff"</button><br>
+                <button class="insert-button" data-insertion-text='android:keyWidth="" (e.g. 10%p)'>android:keyWidth=""</button><br>
+                <button class="insert-button" data-insertion-text='android:horizontalGap=""  (e.g. 1%p)'>android:horizontalGap=""</button><br>
+                <button class="insert-button" data-insertion-text='android:keyWidth="" (e.g. 12.5%p)'>android:keyWidth=""</button><br>
+                <button id="undo-button">Undo last action</button><br>
+                <!--<button id="formatXML">Format XML</button>-->
+            </td>
+        </tr>
+        <tr>
+
+            <textarea id="editable-field" placeholder="Type your text here..."></textarea>
+
+        </tr>
+        <tr>
+            <td>
+                <label for="favcolor">Color Picker </label><br>
+                <input type="color" id="favcolor" name="favcolor" value="#ff0000"><br>
+                <textarea id="color" placeholder="#ff0000"></textarea>
+                <button class="insert-button" data-insertion-text="favcolor">Insert Color</button>
+            </td>
+        </tr>
+    </table>
+
+    <script>
+        // Wait for the DOM content to be fully loaded before executing the script
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get a reference to the textarea element
+            var textarea = document.getElementById('editable-field');
+            // Initialize the undoStack with the initial value of the textarea
+            var undoStack = [textarea.value];
+            // Get references to all elements with the class 'insert-button'
+            var insertButtons = document.querySelectorAll('.insert-button');
+
+            // Add an event listener to the textarea to track changes
+            textarea.addEventListener('input', function() {
+                // Push the current value of the textarea to the undoStack whenever input occurs
+                undoStack.push(textarea.value);
+
+            });
+
+            // Add event listeners to all buttons with the class 'insert-button'
+            insertButtons.forEach(function(button) {
+                button.addEventListener('click', insertText);
+            });
+
+            // Add an event listener to the 'Undo' button
+            document.getElementById('undo-button').addEventListener('click', function() {
+                // Check if there's at least one state stored in the undoStack
+                if (undoStack.length > 1) {
+                    // Remove the current state from the undoStack
+                    undoStack.pop();
+                    // Set the value of the textarea to the previous state
+                    textarea.value = undoStack.pop();
+                }
+            });
+
+            // Define the function to insert text into the textarea
+            function insertText() {
+                // Get the text to be inserted from the 'data-insertion-text' attribute of the button
+                var insertionText = this.getAttribute('data-insertion-text');
+                // If insertionText is set to "favcolor", get the value of the color picker instead
+                if (insertionText === "favcolor") {
+                    insertionText = document.getElementById('favcolor').value;
+                }
+                // Get the current cursor position in the textarea
+                var cursorPosition = textarea.selectionStart;
+                console.log(cursorPosition);
+                // Get the text content of the textarea
+                var textContent = textarea.value;
+                // Insert the text at the cursor position
+                var newText = textContent.slice(0, cursorPosition) + insertionText + textContent.slice(cursorPosition);
+                // Set the value of the textarea to the new text
+                textarea.value = newText;
+                // Update the cursor position after the inserted text
+                textarea.selectionStart = textarea.selectionEnd = cursorPosition + insertionText.length;
+                // Push the new value to the undoStack
+                undoStack.push(newText);
+            }
+
+        });
+
+    </script>
+
+
+
+</body>
+
+</html>

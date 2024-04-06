@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <!-- Include the QR code styling library -->
+    <script type="text/javascript" src="qr-code-styling.js"></script>
+    <script src="https://kit.fontawesome.com/0ab842fff9.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="container" style="display: flex; flex-direction: column; align-items: center; ">
+        <div style="font-family: consolas; font-size: 1.5em;"><i class="fab fa-staylinked"></i> Session Pairing</div>
+        <div id="qrcode"></div>
+        <div id="sessionID" style="font-family: consolas; font-size: 1.25em; text-align: center;"></div>
+    </div>
+    <script>
+        // Function to generate QR code
+        function generateQR(data) {
+            // Clear any existing QR code and SessionID text
+            document.getElementById('qrcode').innerHTML = '';
+            document.getElementById('sessionID').innerHTML = '';
+
+            // Generate QR code with the provided data
+            new QRCodeStyling({
+                width: 200,
+                height: 200,
+                data: data,
+                image: "",
+                qrOptions: {
+                    typeNumber: 0,
+                    mode: "Byte",
+                    errorCorrectionLevel: "Q"
+                },
+                dotsOptions: {
+                    color: "#000000",
+                    type: "square"
+                },
+                backgroundOptions: {
+                    color: "#ffffff"
+                },
+                imageOptions: {
+                    crossOrigin: "anonymous",
+                    margin: 0
+                },
+                dotsOptionsHelper: {
+                    colorType: {
+                        single: true,
+                        gradient: false,
+                        gradientType: "linear",
+                        gradientColor1: "#000000",
+                        gradientColor2: "#000000",
+                        gradientStops: [],
+                        gradientAngle: 0
+                    },
+                    gradientOptions: {
+                        radius: 10,
+                        gradientAngle: 45
+                    },
+                    cornersSquareOptions: {
+                        type: "dot",
+                        dotSize: 3
+                    },
+                    cornersDotOptions: {
+                        type: "dot",
+                        dotSize: 3
+                    }
+                }
+            }).append(document.getElementById('qrcode'));
+
+            // Add SessionID text below the QR code
+            document.getElementById('sessionID').innerText = "Scan the QR code\n to connect to\nSession ID: " + data;
+        }
+
+        // Extracting parameter from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const data = urlParams.get('data');
+
+        // Generate QR code with the extracted data
+        generateQR(data);
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unicode Converter</title>
+    
+    <!-- style -->
+    <link rel="shortcut icon" href="https://www.staylinked.com/hs-fs/hub/410337/file-1410037798-ico/images/master-page-favicon.ico">
+    <link href="style.css" rel="stylesheet" />
+    <link href="unicode.css" rel="stylesheet" />
+    
+    <!-- scripts -->
+    <script src="jquery.min.js"></script>
+    <script src="scripts.js"></script>
+    <script src="https://kit.fontawesome.com/0ab842fff9.js" crossorigin="anonymous"></script>
+    
+</head>
+
+<body>
+
+    <!--Title bar-->
+    <div id="title"></div>
+    <!--end of Title bar-->
+
+
+    <!--Navigation bar-->
+    <div id="navbar"></div>
+    <!--end of Navigation bar-->
+
+    <div class="container">
+
+        <h2 style="width:690px;">Character Converter</h2>
+        <p>Convert characters to unicode values for use within StayLinked</p>
+        <form onsubmit="convertToUnicode(); return false;">
+            <label for="inputText">Enter characters:</label><br><br>
+            <input type="text" id="inputText" name="inputText"><br><br>
+            <label for="unicodeOutput">Output String:</label><br><br>
+            <div id="unicodeOutput"></div><br>
+            <button type="submit">Convert to Unicode</button>
+            <button id="copyButton" onclick="copyToClipboard()" disabled>Copy to Clipboard</button>
+        </form>
+
+        <!--Footer bar-->
+        <div id="footer"></div>
+        <!--end of Footer bar-->
+
+</body>
+
+</html>

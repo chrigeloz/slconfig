@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<!--
+        *******************************************************************
+        Created by Christian Blunschi, StayLinked Corporation.
+        For comments or enquiries, please contact christian@staylinked.com
+        *******************************************************************
+-->
+<html>
+
+<head>
+    <title>StayLinked Evolve Agent Configurator version 1.0</title>
+
+    <!-- Style -->
+    <link rel="shortcut icon" href="https://www.staylinked.com/hs-fs/hub/410337/file-1410037798-ico/images/master-page-favicon.ico">
+    <link rel="stylesheet" href="pageSetup.css">
+    <link rel="stylesheet" href="evolveini.css">
+    <link rel="stylesheet" href="https://kit.fontawesome.com/0ab842fff9.css" crossorigin="anonymous">
+
+    <!-- Style -->
+    <script src="jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/0ab842fff9.js" crossorigin="anonymous"></script>
+    <script src="scripts.js"></script>
+
+</head>
+
+<body>
+
+    <!--Title bar-->
+    <div id="title"></div>
+    <!--end of Title bar-->
+
+
+    <!--Navigation bar-->
+    <div id="navbar"></div>
+    <!--end of Navigation bar-->
+
+    <div id="container">
+
+        <h2>StayLinked Evolve Agent Configurator</h2>
+
+        <input type="file" id="fileInput" style="display: none;">
+        <div id="dropBox">
+
+            <br /><b>Drop evolve.ini here or click to select a file</b>
+            <br />All features will be enabled
+            <br />you may need to disable unwanted features
+
+        </div>
+
+        <p><span><i class="fa-solid fa-plug-circle-plus"></i><b> Connect Evolve</b></span><span class="linkBox"><a href="https://www.staylinked.com/evolve" target="_blank">Learn More</a></span></p>
+        <div id="serverConfig">
+            <form id="configForm">
+
+                <!-- Defaults/Server settings -->
+
+                <!--<div class="form-row">
+                    <label for="uid_override" title="">UID Override:</label>
+                    <input type="text" id="uid_override" name="uid_override">
+                </div>-->
+
+                <div class="form-row">
+                    <label for="server" title="Enable or disable messages to the evolve server">Server:</label>
+                    <select id="Server" name="server">
+                        <option value=""></option>
+                        <option value="1">Enabled</option>
+                        <option value="0">Disabled</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label for="server_address" title="Insert the hostname or IP address of the Evolve Server">Server Address:</label>
+                    <input type="text" id="server_address" name="server_address">
+                </div>
+
+                <div class="form-row">
+                    <label for="server_ssl">Server SSL:</label>
+                    <select id="server_ssl" name="server_ssl">
+                        <option value=""></option>
+                        <option value="1">Enabled</option>
+                        <option value="0">Disabled</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label for="server_port">Server Port:</label>
+                    <input type="number" id="server_port" name="server_port">
+                </div>
+
+                <div class="form-row">
+                    <label for="timestamp_offset">Timestamp Offset:</label>
+                    <input type="number" id="timestamp_offset" name="timestamp_offset">
+                </div>
+
+                <div class="form-row">
+                    <label for="log_level">Log Level:</label>
+                    <select id="log_level" name="log_level">
+                        <option value=""></option>
+                        <option value="0">ALL</option>
+                        <option value="1">DEBUG</option>
+                        <option value="2">CONFIG</option>
+                        <option value="3">INFO</option>
+                        <option value="4">WARN</option>
+                        <option value="5">ERROR</option>
+                        <option value="6">FATAL</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label for="log_console" title="">Write to Android Console Log:</label>
+                    <select id="Log_console" name="log_console">
+                        <option value=""></option>
+                        <option value="1">Enabled</option>
+                        <option value="0">Disabled</option>
+                    </select>
+                </div>
+
+
+
+                <div class="form-row">
+                    <label for="mqtt_ssl">MQTT SSL:</label>
+                    <select id="mqtt_ssl" name="mqtt_ssl">
+                        <option value=""></option>
+                        <option value="1">Enabled</option>
+                        <option value="0">Disabled</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label for="mqtt_server_port">MQTT Server Port:</label>
+                    <input type="number" id="mqtt_server_port" name="mqtt_server_port">
+                </div>
+
+
+                <div class="form-row">
+                    <label for="mode">Mode</label>
+                    <select id="mode" name="mode">
+                        <option value=""></option>
+                        <option value="primary">primary</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label for="bt_injection">Bluetooth Injection</label>
+                    <select id="bt_injection" name="bluetooth_injection">
+                        <option value=""></option>
+                        <option value="primary">generic</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label for="peripheral_max_queued_scans">Max Queued Scans</label>
+                    <input type="number" id="peripheral_max_queued_scans" name="peripheral_max_queued_scans">
+                </div>
+
+                <p1><b>Enable and configure features below as required.<br /> Note:</b> Deselecting will clear your settings</p1>
+
+                <!-- Display Settings -->
+
+                <p><span><input class="activate" data-wrapper="displayWrapper" type="checkbox" id="activate_display" name="activate_display" value="1"><i class="fa-solid fa-mobile-screen-button"></i><b> Display features</b></span></p>
+
+                <div id="displayWrapper" style="display: none;">
+
+                    <div class="form-row">
+                        <label for="picture_callback">Picture Callback:</label>
+                        <select id="picture_callback" name="picture_callback">
+                            <option value=""></option>
+                            <option value="1">Enabled</option>
+                            <option value="0">Disabled</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="display_back_color">Display - Back Colour:</label>
+                        <input type="text" id="display_back_color" name="display_back_color" style="width:90px;">
+                        <input type="color" class="color-picker" data-target="#display_back_color">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="display_text_color">Display - Text Colour:</label>
+                        <input type="text" id="display_text_color" name="display_text_color" style="width:90px;">
+                        <input type="color" class="color-picker" data-target="#display_text_color">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="button_back_color">Button - Back Colour:</label>
+                        <input type="text" id="button_back_color" name="button_back_color" style="width:90px;">
+                        <input type="color" class="color-picker" data-target="#button_back_color">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="button_text_color">Button - Text Colour:</label>
+                        <input type="text" id="button_text_color" name="button_text_color" style="width:90px;">
+                        <input type="color" class="color-picker" data-target="#button_text_color">
+                    </div>
+
+
+                    <div class="form-row">
+                        <label for="display_ui_delay">Display UI Delay (ms):</label>
+                        <input type="number" id="display_ui_delay" name="display_ui_delay" value="">
+                    </div>
+
+                </div>
+
+
+
+                <!-- Provisioning Settings -->
+                <p><span><input class="activate" data-wrapper="provisioningWrapper" type="checkbox" id="activate_provisioning" name="activate_provisioning" value="1"><i class="fa-solid fa-link"></i><b> Provisioning feature</b></span></p>
+
+                <div id="provisioningWrapper" display: hidden>
+
+                    <div class="form-row">
+                        <label for="prov_uid" title="Provisioning UID">Provisioning UID:</label>
+                        <input type="text" id="prov_uid" name="prov_uid">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="prov_pwd" title="Provisioning Password">Provisioning Password:</label>
+                        <input type="text" id="prov_pwd" name="prov_pwd">
+                    </div>
+
+                </div>
+
+                <!-- File Transfer Settings -->
+                <p><span><input class="activate" data-wrapper="filetransferWrapper" type="checkbox" id="activate_filetransfer" name="activate_filetransfer" value="1"><i class="fa-solid fa-arrow-right-arrow-left"></i><b> File Transfer feature</b></span></p>
+
+                <div id="filetransferWrapper" display: hidden>
+
+                    <div class="form-row">
+                        <label for="ftp_server" title="FTP Server Address">FTP Server Address:</label>
+                        <input type="text" id="ftp_server" name="ftp_server">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="ftp_server_port">FTP Server Port:</label>
+                        <input type="number" id="ftp_server_port" name="ftp_server_port">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="sftp">Secure FTP:</label>
+                        <select id="sftp" name="sftp">
+                            <option value=""></option>
+                            <option value="1">Enabled</option>
+                            <option value="0">Disabled</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="ftp_server_pasv_mode">FTP Passive Mode:</label>
+                        <select id="ftp_server_pasv_mode" name="ftp_server_pasv_mode">
+                            <option value=""></option>
+                            <option value="1">Enabled</option>
+                            <option value="0">Disabled</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="ftp_server_username" title="FTP Server Username">FTP Server Username:</label>
+                        <input type="text" id="ftp_server_username" name="ftp_server_username">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="ftp_server_password" title="FTP Server Password">FTP Server Password:</label>
+                        <input type="text" id="ftp_server_password" name="ftp_server_password">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="alternative_server" title=" alternative_server">HTTP Server Address (POST):</label>
+                        <input type="text" id=" alternative_server" name=" alternative_server">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="alternative_server_port">HTTP Server Port:</label>
+                        <input type="number" id="alternative_server_port" name="alternative_server_port">
+                    </div>
+
+                </div>
+
+                <!-- Evolve Client Event Settings -->
+
+                <p><span><input class="activate" data-wrapper="eventsWrapper" type="checkbox" id="activate_events" name="activate_events" value="1"><i class="fa-solid fa-bolt"></i><b> Events feature</b></span></p>
+
+                <div id="eventsWrapper" display: hidden>
+
+                    <div class="form-row">
+                        <label for="record_debug_events">Record Debug Events:</label>
+                        <select id="record_debug_events" name="record_debug_events">
+                            <option value=""></option>
+                            <option value="1">Enabled</option>
+                            <option value="0">Disabled</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="record_sensor_events">Record Sensor Events:</label>
+                        <select id="record_sensor_events" name="record_sensor_events">
+                            <option value=""></option>
+                            <option value="1">Enabled</option>
+                            <option value="0">Disabled</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="record_power_events">Record Power Events:</label>
+                        <select id="record_power_events" name="record_power_events">
+                            <option value=""></option>
+                            <option value="1">Enabled</option>
+                            <option value="0">Disabled</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="record_network_events">Record Network Events:</label>
+                        <select id="record_network_events" name="record_network_events">
+                            <option value=""></option>
+                            <option value="1">Enabled</option>
+                            <option value="0">Disabled</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="record_external_events">Record External Events:</label>
+                        <select id="record_external_events" name="record_external_events">
+                            <option value=""></option>
+                            <option value="1">Enabled</option>
+                            <option value="0">Disabled</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <!-- Fetch Settings -->
+
+                <p><span><input class="activate" data-wrapper="fetchWrapper" type="checkbox" id="activate_fetchcore" name="activate_fetchcore" value="1"><i class="fa-solid fa-circle-plus"></i><b> Fetch Robotics feature</b></span><span class="linkBox"><a href="https://www.zebra.com/us/en/products/autonomous-mobile-robots.html" target="_blank">Learn More</a></span></p>
+
+                <div id="fetchWrapper" display: hidden>
+
+                    <div class="form-row">
+                        <label for="oauth_uri" title="oAuth URI">Fetch - oauth uri:</label>
+                        <input type="text" id="oauthURI" name="oauth_uri">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="user_name" title="Fetch User Name">Fetch - User Name:</label>
+                        <input type="text" id="userName" name="user_name">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="password" title="Fetch User Name">Fetch - Password:</label>
+                        <input type="text" id="password" name="password">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="client_id" title="Fetch Client ID">Fetch - Client ID:</label>
+                        <input type="text" id="client_id" name="client_id">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="client_secret" title="Fetch Client Secret">Fetch - Client Secret:</label>
+                        <input type="text" id="client_secret" name="client_secret">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="sync_locations">Sync Locations:</label>
+                        <select id="sync_locations" name="sync_locations">
+                            <option value=""></option>
+                            <option value="1">Enabled</option>
+                            <option value="0">Disabled</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="sync_interval">Sync Interval:</label>
+                        <input type="number" id="sync_interval" name="sync_interval">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="map_endpoint" title="URL of mapping data">Map Endpoint:</label>
+                        <input type="text" id="map_endpoint" name="map_endpoint">
+                    </div>
+
+                </div>
+
+                <!-- Linde Settings -->
+                <p><span><input class="activate" data-wrapper="lindeWrapper" type="checkbox" id="activate_linde_serial_port" name="activate_linde_serial_port" value="1"><i class="fa-solid fa-circle-plus"></i><b> Linde VNA feature</b></span><span class="linkBox"><a href="https://www.linde-mh.com/en/About-us/Innovations-from-Linde/Linde-Warehouse-Navigation.html" target="_blank">Learn More</a></span></p>
+
+                <div class="activate" id="lindeWrapper" display: hidden>
+
+                    <div class="form-row">
+                        <label for="enabled">Enable Linde Serial:</label>
+                        <select id="enabled" name="enabled">
+                            <option value=""></option>
+                            <option value="1">Enabled</option>
+                            <option value="0">Disabled</option>
+                        </select>
+                    </div>
+
+
+                    <div class="form-row">
+                        <label for="port">Linde Port:</label>
+                        <select id="port" name="port">
+                            <option value=""></option>
+                            <option value="0">COM1</option>
+                            <option value="1">COM2</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="baud_rate">Linde Baud Rate:</label>
+                        <input type="number" id="baud_rate" name="baud_rate">
+                    </div>
+
+                    <div class="form-row">
+                        <label for=" usb_devices" title="usb_devices">USB Devices:</label>
+                        <input type="text" id="usb_devices" name="usb_devices">
+                    </div>
+
+                </div>
+
+                <!-- Honeywell Settings -->
+                <p><span><input class="activate" data-wrapper="honeywellWrapper" type="checkbox" id="activate_honeywell" name="activate_honeywell" value="1"><i class="fa-solid fa-circle-plus"></i><b> Honeywell feature</b></span><span class="linkBox"><a href="https://sps.honeywell.com/us/en/software/productivity/browsers-and-emulators/smart-te" target="_blank">Learn More</a></span></p>
+
+                <div class="activate" id="honeywellWrapper" display: hidden>
+
+                    <div class="form-row">
+                        <label for="data_intent">Honeywell Data Intent:</label>
+                        <select id="data_intent" name="data_intent">
+                            <option value=""></option>
+                            <option value="1">Enabled</option>
+                            <option value="0">Disabled</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Hanshow Settings -->
+                <p><span><input class="activate" data-wrapper="hanshowWrapper" type="checkbox" id="activate_hanshow" name="activate_hanshow" value="1"><i class="fa-solid fa-circle-plus"></i><b> Hanshow feature </b></span><span class="linkBox"><a href="https://www.hanshow.com/en" target="_blank">Learn More</a></span></p>
+
+                <div class="activate" id="hanshowWrapper" display: hidden>
+
+                    <div class="form-row">
+                        <label for="server_uri" title="Insert the hostname or IP address of the Hanshow Server">Server URI:</label>
+                        <input type="url" id="server_uri" name="server_uri">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="username" title="Insert the Hanshow username">User name:</label>
+                        <input type="text" id="username" name="username">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="password" title="Insert the Hanshow password">Password:</label>
+                        <input type="text" id="password" name="password">
+                    </div>
+
+                </div>
+
+              <!-- Next Thing Settings -->
+<!-- 
+                <p><span><input class="activate" data-wrapper="nextthingWrapper" type="checkbox" id="activate_nextthing" name="activate_nextthing" value="1"><i class="fa-solid fa-circle-plus"></i><b> Next Thing</b></span><span class="linkBox"><a href="www.example.com" target="_blank">Learn More</a></span></p>
+
+                <div class="activate" id="nextthingWrapper" display: hidden>
+
+                    <div class="form-row">
+                        <label for="nextthingstuff">Test Item:</label>
+                        <select id="nextthingstuff" name="nextthingstuff">
+                            <option value=""></option>
+                            <option value="1">Enabled</option>
+                            <option value="0">Disabled</option>
+                        </select>
+                    </div>
+                </div>
+-->
+            </form>
+        </div>
+        <div class="button-row">
+            <button class="endButton" id="resetBtn">Reset Form</button> <button class="endButton" id="submitBtn">Generate Configuration File</button>
+        </div>
+
+    </div>
+    <!--Footer bar-->
+    <div id="footer"></div>
+    <!--end of Footer bar-->
+</body>
+
+</html>

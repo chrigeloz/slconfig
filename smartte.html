@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<!--    
+        *******************************************************************
+        Created by Christian Blunschi, StayLinked Corporation.
+        For comments or enquiries, please contact christian@staylinked.com
+        *******************************************************************
+-->
+
+<html>
+
+<head>
+    <title>SmartTE Auto Install</title>
+    
+    <!-- style -->
+    <link rel="shortcut icon" href="https://www.staylinked.com/hs-fs/hub/410337/file-1410037798-ico/images/master-page-favicon.ico">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- scripts -->
+    <script src="https://kit.fontawesome.com/0ab842fff9.js" crossorigin="anonymous"></script>
+    <script src="jquery.min.js"></script>
+    <script src="scripts.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var picChanger = document.getElementById('pic-changer');
+            var imageLocation = document.getElementById('image-location');
+
+            picChanger.addEventListener('change', function() {
+                var selectedOption = picChanger.options[picChanger.selectedIndex].text;
+                var imageSource = picChanger.value;
+
+                if (imageSource && imageSource !== "") {
+                    var content = '<p>Device Category: ' + selectedOption + '</p>';
+                    content += '<img src="' + imageSource + '">';
+                    imageLocation.innerHTML = content;
+                } else {
+                    imageLocation.innerHTML = '';
+                }
+            });
+        });
+
+    </script>
+
+</head>
+
+<body>
+
+       <!--Title bar-->
+        <div id="title"></div>
+        <!--end of Title bar-->
+
+
+        <!--Navigation bar-->
+        <div id="navbar"></div>
+        <!--end of Navigation bar-->
+    
+    <div class="container">
+
+ 
+        <div class="table">
+            <table>
+
+                <tr>
+                    <td>
+                        <div id="title">
+                            <h2>SmartTE Auto Install</h2>
+                        </div>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td> <select id="pic-changer">
+                            <option value="">Select your device category</option>
+                            <option value="img/HoneywellSmartTE.png">Honeywell</option>
+                            <option value="img/ZebraSmartTE.png">Zebra (Android 10 and below)</option>
+                            <option value="img/ZebraSmartTE11.png">Zebra (Android 11 and up)</option>
+                            <option value="img/datalogicqr.png">Datalogic</option>
+                            <option value="img/SmartTEDL.png">Direct Download</option>
+                        </select></td>
+
+                </tr>
+
+                <tr>
+                    <td>
+                        <div id="image-location"></div>
+                    </td>
+                </tr>
+
+
+            </table>
+        </div>
+
+
+        <!--Footer bar-->
+        <div id="footer"></div>
+        <!--end of Footer bar-->
+
+
+</body>
+
+</html>

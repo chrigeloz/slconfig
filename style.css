@@ -1,0 +1,367 @@
+@import "pageSetup.css";
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 100vh;
+    min-width: 700px;
+        max-width: 700px;
+    margin: 0%;
+}
+
+.appwrapper {
+
+    display: block;
+    width: 700px;
+}
+
+body {
+
+    font-family: roboto;
+
+}
+
+#text {
+    font-size: 1.5em;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+}
+
+.helpContainer {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 375px;
+    border: 2px solid green;
+    border-radius: 5px;
+}
+
+#dataInput {
+    width: 292px
+}
+
+button.off {
+    width: 300px;
+    background-color: rgb(250, 250, 250);
+    border: 0.5px solid grey;
+    border-radius: 8px;
+    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.09);
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+button {
+    background: lightgrey;
+    color: black;
+    font-family: Arial;
+    height: 40px;
+    width: 300px;
+    border-radius: 12px;
+    border-color: black;
+    border: 2px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    font-size: 1.00em;
+    margin-bottom: 15px;
+
+}
+
+
+#introTextContainer {
+
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-width: 600px;
+    height: auto;
+    font-family: 'Roboto', sans-serif;
+    font-weight: normal;
+    font-size: 0.85em;
+    color: black;
+    overflow-y: auto;
+    margin-bottom: 10px;
+
+}
+
+#helpTextContainer {
+
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-width: 375px;
+    height: 175px;
+    font-family: 'Arial', sans-serif;
+    font-weight: normal;
+    color: black;
+    font-size: 0.85em;
+    overflow-y: auto;
+    border: 0px solid grey;
+    background-color: #c9f2dd;
+    text-align: left;
+}
+
+#settingId {
+    width: 300px;
+
+}
+
+#bcdata {
+    resize: none;
+    width: 300px;
+    height: 150px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    color: black;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    font-size: 0.75em;
+
+    border: 1px solid grey;
+}
+
+#bcValue {
+    font-size: 0.75em;
+    align-self: flex-start;
+    flex: 1;
+    /* Allow #bcValue to grow and occupy the available space */
+    overflow: auto;
+    /* Enable scrolling if content exceeds the container height */
+}
+
+#bc-data {
+    resize: none;
+    width: 300px;
+    height: 150px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    color: black;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    font-size: 0.75em;
+
+    border: 1px solid grey;
+}
+
+#searchbar {
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 20px;
+    font-size: 1em;
+    width: 700px;
+    
+
+}
+
+#canvas {
+    width: 300px;
+    height: 300px;
+    align-self: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#qrFrame {
+    width: 375px;
+    height: 375px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+h1 {
+    width: var(--layoutWidth);
+    background: black;
+    color: white;
+    font-family: Arial;
+    font-size: 1.25em;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+h2 {
+    width: var(--layoutWidth);
+    background: white;
+    color: black;
+    font-family: Arial;
+    font-size: 1em;
+    padding: 5px;
+
+}
+
+label {
+    width: 300px;
+    background: green;
+    color: white;
+    font-family: Arial;
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+img {
+
+    border: 2px solid gray;
+    padding: 25px 25px 25px 25px;
+    margin-bottom: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 15px;
+    box-shadow: 3px 3px gray, -1em 0 .4em gray;
+    height: 250px;
+    width: auto;
+    text-align: center;
+
+
+}
+
+img-smartte {
+
+    border: 2px solid gray;
+    padding: 50px 50px 50px 50px;
+    margin-bottom: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 50px;
+    box-shadow: 3px 3px gray, -1em 0 .4em gray;
+    height: 100px;
+    width: auto;
+    text-align: center;
+
+
+}
+
+#logo {
+
+
+    margin-bottom: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    height: 25px;
+    width: auto;
+}
+
+#code {
+
+    border: 2px solid gray;
+    padding: 20px 20px 20px 20px;
+    margin-bottom: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 20px;
+    box-shadow: 2px 2px gray, -1em 0 .3em gray;
+    height: 250px;
+    width: auto;
+    display: block;
+    text-align: center;
+}
+
+#image-location {
+
+    /*border: 2px solid gray;
+    padding: 20px 20px 20px 20px;
+    margin-bottom: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 20px;
+    box-shadow: 2px 2px gray, -1em 0 .3em gray;*/
+    height: auto;
+    width: auto;
+    display: block;
+    text-align: center;
+}
+
+#qrsmartte {
+
+    border: 0px;
+    padding: 20px 20px 20px 20px;
+    height: auto;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+
+#title {
+    text-align: left;
+    margin-left: 0px;
+    width: 700px;
+}
+
+
+#ip_address {
+    border: 2px solid gray;
+    padding: 5px 10px 5px 20px;
+    margin-bottom: 15px;
+    margin-right: 5px;
+    margin-left: 10px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: 25px;
+    font-family: arial;
+    font-size: 1.25em;
+    color: green;
+    text-align: center;
+    width: 300px;
+}
+
+#pic-changer {
+    border: 2px solid gray;
+    padding: 5px 10px 5px 20px;
+    margin-bottom: 15px;
+    margin-right: 5px;
+    margin-left: 10px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: 40px;
+    font-family: arial;
+    font-size: 1.25em;
+    color: green;
+    text-align: left;
+    width: 550px;
+}
+
+button {
+    background: lightgrey;
+    color: black;
+    font-family: Arial;
+    height: 40px;
+    width: 300px;
+    border-radius: 12px;
+    border-color: black;
+    border: 2px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    font-size: 1.25em;
+    margin-bottom: 15px;
+
+}
+
+td {
+    width: 700px;
+    text-align: center;
+    align: center;
+
+}
+
+tr {
+    width: 700px;
+    text-align: center;
+    align: center;
+
+}
+
+#logo {}
+
+#code img {
+    max-width: 100%;
+    height: auto;
+}

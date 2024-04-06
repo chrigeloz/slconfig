@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<!--    
+     *******************************************************************
+     Created by Christian Blunschi, StayLinked Corporation.
+     For comments or enquiries, please contact christian@staylinked.com
+     *******************************************************************
+-->
+
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>StayLinked QR Generator</title>
+    
+    <!-- Style -->    
+    <link rel="shortcut icon" href="https://www.staylinked.com/hs-fs/hub/410337/file-1410037798-ico/images/master-page-favicon.ico">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Scripts -->
+    <script src="https://kit.fontawesome.com/0ab842fff9.js" crossorigin="anonymous"></script>
+    <script src="jquery.min.js"></script>
+    <script src="scripts.js"></script>
+
+
+<!--
+    *******************************************************************
+    Settings Options Templates
+    Contains available values for the various configured Settings
+    *******************************************************************
+-->
+
+    <script id="text-template" type="text/x-handlebars-template">
+        <input type="text" name="dataInput" id="dataInput" placeholder="enter a value" required />
+        </script>
+
+    <script id="multi-connect-template" type="text/x-handlebars-template">
+        <select name="dataInput" id="dataInput" required>  
+                 <option value="1">Legacy Dual Session</option>
+                 <option value="2">Two Connections</option>
+                 <option value="3">Three Connections</option>
+                 <option value="4">Four Connections</option>
+                 <option value="5">Five Connections</option>
+                 <option value="6">Six Connections</option>
+                 <option value="7">Seven Connections</option>
+                 <option value="8">Eight Connections</option>
+                 <option value="9">Nine Connections</option>
+                 <option value="10">Ten Connections</option>
+             </select>
+        </script>
+
+    <script id="auto-connect-template" type="text/x-handlebars-template">
+        <select name="dataInput" id="dataInput" required>  
+                 <option value="0">Never</option>
+                 <option value="1">Once</option>
+                 <option value="2">Always</option>
+             </select>
+           
+        </script>
+
+    <script id="enable-disable-template" type="text/x-handlebars-template">
+        <select name="dataInput" id="dataInput" required>  
+                 <option value="0">Disable</option>
+                 <option value="1">Enable</option>
+             </select>
+        </script>
+
+    <script id="keyboard-qwerty-template" type="text/x-handlebars-template">
+        <select name="dataInput" id="dataInput" required>  
+			<option value="0">Standard (Default)</option>
+			<option value="1">Small</option>
+			<option value="2">Azerty</option>
+			<option value="3">Full Screen</option>
+			<option value="5">4-Column Right</option>
+			<option value="5">4-Row Full</option>
+			<option value="6">4-Column Full</option>
+			<option value="7">Warehouse 1 Alpha - QWERTZ</option>
+			<option value="8">Warehouse 2 Alpha - QWERTY</option>
+			<option value="10">Custom Qwerty</option>
+			<option value="-1">Disabled</option>
+             </select>
+        </script>
+
+
+
+    <script id="keyboard-numpad-template" type="text/x-handlebars-template">
+        <select name="dataInput" id="dataInput" required>  
+			<option value="5">5-Row (Default)</option>
+            <option value="1">Full Screen</option>
+			<option value="2">2-Row</option>
+			<option value="3">3-Row</option>
+			<option value="4">2-Column Right</option>
+			<option value="6">3-Column Right</option>
+			<option value="10">Custom Numpad</option>
+			<option value="-1">Disabled</option>
+             </select>
+        </script>
+
+    <script id="keyboard-numsym-template" type="text/x-handlebars-template">
+        <select name="dataInput" id="dataInput" required>  
+			<option value="0">Standard (Default)</option>
+			<option value="1">Azerty</option>
+            <option value="2">Warehouse 1 Numpad</option>
+			<option value="10">Custom Number/Symbol</option>
+			<option value="-1">Disabled</option>
+             </select>
+        </script>
+
+    <script id="keyboard-ctrl-template" type="text/x-handlebars-template">
+        <select name="dataInput" id="dataInput" required>  
+			<option value="0">Standard (Default)</option>
+			<option value="1">Warehouse 1 FKeys (F1 to F12)</option>
+			<option value="10">Custom Ctrl</option>
+			<option value="-1">Disabled</option>
+             </select>
+        </script>
+
+    <script id="keyboard-transparency-template" type="text/x-handlebars-template">
+        <select name="dataInput" id="dataInput" required>  
+			<option value="100">Disabled (Default)</option>
+			<option value="80">Low</option>
+			<option value="60">Medium</option>
+			<option value="40">High</option>
+             </select>
+        </script>
+
+    <script id="keyboard-func-template" type="text/x-handlebars-template">
+        <select name="dataInput" id="dataInput" required>  
+			<option value="0">Standard (Default)</option>
+			<option value="1">Warehouse 1 FKeys (F13 to F24)</option>
+			<option value="10">Custom Function</option>
+			<option value="-1">Disabled</option>
+             </select>
+        </script>
+
+    <script id="default-help-template" type="text/x-handlebars-template">
+        <b>There is no help text for this setting yet</b>
+        </script>
+
+
+    <script id="display-orientation-template" type="text/x-handlebars-template">
+        <select name="dataInput" id="dataInput" required>  
+			<option value="0">Allow Rotation (Default)</option>
+			<option value="1">Lock at Connection</option>
+			<option value="2">Lock Portrait</option>
+            <option value="3">Lock Landscape</option>
+            <option value="4">Lock Reverse Portrait</option>
+            <option value="5">Lock Reverse Landscape</option>
+             </select>
+        </script>
+
+    <script id="display-pan-zoom-template" type="text/x-handlebars-template">
+        <select name="dataInput" id="dataInput" required>  
+			<option value="0">Pan & Zoom Disabled</option>
+			<option value="1">Pan & Zoom Enabled (Default)</option>
+			<option value="2">Allow Zoom Only</option>
+            <option value="3">Allow Pan Only</option>
+            </select>
+        </script>
+
+
+    <script id="display-fit-template" type="text/x-handlebars-template">
+        <select name="dataInput" id="dataInput" required>  
+			<option value="0">Fits Height (Default)</option>
+			<option value="1">Fits Width</option>
+			<option value="2">Fits Best</option>
+            <option value="3">Fits Zoom Factor 1</option>
+            <option value="4">Fits Zoom Factor 2</option>
+            <option value="5">Fits Zoom Factor 3</option>
+            <option value="6">Fits Zoom Factor 4</option>
+            </select>
+        </script>
+
+
+<!--    
+    *******************************************************************
+    Settings Help Text Templates
+    Contains help text for the various configured Settings
+    *******************************************************************
+-->
+
+    <script id="D1-help-template" type="text/x-handlebars-template">
+        <b>Staylinked Server IP/Hostname</b><br>
+        Enter the IP address or Hostname of your StayLinked server.<br>This is the bare minimum configuration that any StayLinked Client needs to have. All other settings can be configured using the StayLinked Administrator and deployed from the StayLinked server.<br>
+        <b>Note:</b> This settings is for the StayLinked Server address, not the Telnet Host.
+        </script>
+
+    <script id="D21-help-template" type="text/x-handlebars-template">
+        <b>Auto-Connect</b><br>
+        The StayLinked Client can automatically connect to the StayLinked server when the app is started.<br>
+        <b>Auto-Connect has three modes:</b><br>
+        <b>Never:</b> Never Auto-Connect, every connection must be carried out manually by the device operator by selecting 'HOST' and 'Connect'<br>
+        <b>Once:</b> The StayLinked app will automatically connect one time after starting the StayLinked app.<br>
+        <b>Always:</b> Always auto-connect. Auto-Connect can be cancelled on the client using the Android 'Back' Button.
+        </script>
+
+    <script id="D137-help-template" type="text/x-handlebars-template">
+        <b>Custom Device Type</b><br>
+        You can change the device type that is displayed on the StayLinked Client splash-screen.<br>
+        This may be useful for situations where you require more granular device filtering using Device Groups.<br>
+        Enter a value of <b>[null]</b> to set the device type back to it's default state.<br>
+        <br><b>Note:</b> If you create a custom device type that is not in the standard list of supported devices, you will also need to create a new keyboard map to match in your StayLinked Administrator.
+        </script>
+
+    <script id="D123-help-template" type="text/x-handlebars-template">
+        <b>Workstation ID</b><br>
+        Use this setting to hardcode a workstation ID in your StayLinked Client.<br>
+        This configuration item may be required by your host system to uniquely identify your device.<br>
+        </script>
+
+    <script id="D204-help-template" type="text/x-handlebars-template">
+        <b>Multi Connection Limit</b><br>
+        Use this setting to specify the maximum number of multi-connections available to be configured using 'connections.ini'<br>
+        'Legacy Dual Session' does not require any special configuration. Two connections or above will require that each connection is defined in the StayLinked Client configuration UI or that a 'connections.ini' file containing each connection is deployed to the device.<br>
+		For more information, click <a href="https://portal.staylinked.com/sl/kb/knowledge-base/multi-session-configurations/#configuring-for-more-than-2-sessions" target="_blank">HERE</a>
+        </script>
+
+    <script id="D293-help-template" type="text/x-handlebars-template">
+        <b>Preferred Host Entry</b><br>
+        Specifies the name of the 'Telnet Host Entry' that should be automatically selected if found in the 'Select a Host' menu.<br>Provides the ability to auto-select a Telnet Host Entry from the Telnet Host Group without seeing the menu.<br>
+        </script>
+
+    <script id="CDebug_proto-help-template" type="text/x-handlebars-template">
+        <b>Client Verbose Logging</b><br>
+        Use this setting to activate client verbose logging.<br>
+        The client log may be retrieved via usb connection to the device or from the StayLinked Administrator.<br>
+        </script>
+
+    <script id="qwerty-help-template" type="text/x-handlebars-template">
+        <b>Select the desired layout for the QWERTY keyboard Type</b><br>
+        StayLinked provides 5 separate keyboard sub-groups which you are able to manipulate:<br>QWERTY (AlphaNumeric), Number Symbol, Number Pad, CTRL Keys and Function Keys.<br><br>For more information on Keyboard Styles, click <a href="https://portal.staylinked.com/sl/kb/knowledge-base/smart-keyboard-style-guide/#qwerty-smart-keyboard-type" target="_blank">HERE</a>
+        </script>
+
+    <script id="numpad-help-template" type="text/x-handlebars-template">
+        <b>Select the desired layout for the NUMPAD keyboard Type</b><br>
+        StayLinked provides 5 separate keyboard sub-groups which you are able to manipulate:<br>QWERTY (AlphaNumeric), Number Symbol, Number Pad, CTRL Keys and Function Keys.<br><br>For more information on Keyboard Styles, click <a href="https://portal.staylinked.com/sl/kb/knowledge-base/smart-keyboard-style-guide/#numpad-smart-keyboard-type" target="_blank">HERE</a>
+        </script>
+
+    <script id="numsym-help-template" type="text/x-handlebars-template">
+        <b>Select the desired layout for the NUMBER SYMBOL keyboard Type</b><br>
+        StayLinked provides 5 separate keyboard sub-groups which you are able to manipulate:<br>QWERTY (AlphaNumeric), Number Symbol, Number Pad, CTRL Keys and Function Keys.<br><br>For more information on Keyboard Styles, click <a href="https://portal.staylinked.com/sl/kb/knowledge-base/smart-keyboard-style-guide/#numbersymbol-smart-keyboard-type" target="_blank">HERE</a>
+        </script>
+
+    <script id="ctrl-help-template" type="text/x-handlebars-template">
+        <b>Select the desired layout for the CTRL keyboard Type</b><br>
+        StayLinked provides 5 separate keyboard sub-groups which you are able to manipulate:<br>QWERTY (AlphaNumeric), Number Symbol, Number Pad, CTRL Keys and Function Keys.<br><br>For more information on Keyboard Styles, click <a href="https://portal.staylinked.com/sl/kb/knowledge-base/smart-keyboard-style-guide/#ctrl-smart-keyboard-type" target="_blank">HERE</a>
+        </script>
+
+    <script id="transparency-help-template" type="text/x-handlebars-template">
+        <b>Select the level of tranparency for the Smart Keyboard</b><br>
+        StayLinked Smart Keyboards can be set to various tranparency modes.<br>The more transparent, the more visible the TE screen will become through the keyboard.<br>
+        </script>
+
+    <script id="func-help-template" type="text/x-handlebars-template">
+        <b>Select the desired layout for the FUNC keyboard Type</b><br>
+        StayLinked provides 5 separate keyboard sub-groups which you are able to manipulate:<br>QWERTY (AlphaNumeric), Number Symbol, Number Pad, CTRL Keys and Function Keys.<br><br>For more information on Keyboard Styles, click <a href="https://portal.staylinked.com/sl/kb/knowledge-base/smart-keyboard-style-guide/#fkeys-smart-keyboard-type" target="_blank">HERE</a>
+        </script>
+
+    <script id="D245-help-template" type="text/x-handlebars-template">
+        <b>Screen Orientation</b><br>
+        Select the rotation option, allowing or restricting the user from turning the device to switch between portrait and landscape views.<br>
+        </script>
+
+    <script id="D246-help-template" type="text/x-handlebars-template">
+        <b>Screen Pan & Zoom</b><br>
+        Allows the user to dynamically grow and shrink the display size and shift the display left to right and up or down to see different sections of the display space.<br>
+        </script>
+
+    <script id="D173-help-template" type="text/x-handlebars-template">
+        <b>Device Display (viewport) Columns</b><br>
+        Fixed Rows and Columns are available to set the dimensions of the display space.<br>Terminal emulation screens are typically 24 rows by 80 columns. Some emulation specifications can be larger, but most devices cannot clearly display that much text on a usable screen. The portion displayed by the client is called the viewport.<br>Multi-touch devices can be configured to use the entire emulation space. With these clients, you are able to pan and zoom across the entire emulation space (optional). Reducing the row and column will prevent users from accessing this area on your devices.<br>
+        </script>
+
+    <script id="D172-help-template" type="text/x-handlebars-template">
+        <b>Device Display (viewport) Rows</b><br>
+        Fixed Rows and Columns are available to set the dimensions of the display space.<br>Terminal emulation screens are typically 24 rows by 80 columns. Some emulation specifications can be larger, but most devices cannot clearly display that much text on a usable screen. The portion displayed by the client is called the viewport.<br>Multi-touch devices can be configured to use the entire emulation space. With these clients, you are able to pan and zoom across the entire emulation space (optional). Reducing the row and column will prevent users from accessing this area on your devices.<br>
+        </script>
+
+
+    <script id="D243-help-template" type="text/x-handlebars-template">
+        <b>Session fits Display</b><br>
+        Sets the default zoom size to fit the height or width of the display space to the screen size.<br>
+        </script>
+
+</head>
+
+
+
+<body>
+
+    <!--Title bar-->
+    <div id="title"></div>
+    <!--end of Title bar-->
+
+    <!--Navigation bar-->
+    <div id="navbar"></div>
+    <!--end of Navigation bar-->
+
+    <div class="container">
+
+
+
+        <div class="appwrapper">
+
+            <h2>SmartTE Client Configuration: Scan2Configure QR Generator</h2>
+
+
+            <form id="qrForm" onsubmit="return false;">
+
+                <div id="introTextContainer">
+
+                    <div><i class="fa fa-info-circle"></i><b> Instructions</b></div>
+
+                    <div>
+                        Select the desired setting below, then select the value and click on 'Add Client Setting'.
+                        You can add multiple client settings to a single QR Code.
+                        Once you have added all of your settings, click on Generate QR Code to ensure that all of your settings are added to the QR Code.
+                        Open your StayLinked client, select 'TOOLS' and then 'SCAN TEST'.
+                        Scan the QR Code below to apply your settings.<br>
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Some settings may need a restart of the StayLinked client to take effect.
+                    </div>
+
+                </div>
+                <table width="100%">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="inputContainer">
+
+                                    <label for="settingId"><i class="fas fa-cogs"></i> Setting</label>
+                                    <select name="settingId" id="settingId">
+                                        <option value="D1" data-input="text" data-help="D1" selected><b>StayLinked Server IP</b></option>
+                                        <option value="D21" data-input="auto-connect" data-help="D21"><b>Auto Connect</b></option>
+                                        <option value="D137" title="Enter the custom device type" data-input="text" data-help="D137"><b>Custom Device Type</b></option>
+                                        <option value="D123" data-input="text" data-help="D123"><b>Workstation ID</b></option>
+                                        <option value="D293" data-input="text" data-help="D293"><b>Preferred Host Entry</b></option>
+                                        <option value="D204" data-input="multi-connect" data-help="D204"><b>Multi Connection (Session) Limit</b></option>
+                                        <option value="Cdebug_proto" data-input="enable-disable" data-help="CDebug_proto"><b>Client Verbose Debugging</b></option>
+                                        <option value="D250" data-input="keyboard-qwerty" data-help="qwerty"><b>Smart Keyboard Style for QWERTY Type</b></option>
+                                        <option value="D251" data-input="keyboard-numpad" data-help="numpad"><b>Smart Keyboard Style for NUMPAD Type</b></option>
+                                        <option value="D259" data-input="keyboard-numsym" data-help="numsym"><b>Smart Keyboard Style for NUMBER SYMBOL Type</b></option>
+                                        <option value="D261" data-input="keyboard-func" data-help="func"><b>Smart Keyboard Style for FUNCTION KEYS Type</b></option>
+                                        <option value="D260" data-input="keyboard-ctrl" data-help="ctrl"><b>Smart Keyboard Style for CTRL Type</b></option>
+                                        <option value="D271" data-input="keyboard-transparency" data-help="transparency"><b>Smart Keyboard Transparency</b></option>
+                                        <option value="D245" data-input="display-orientation" data-help="D245"><b>Device Display: Orientation</b></option>
+                                        <option value="D246" data-input="display-pan-zoom" data-help="D246"><b>Device Display: Pan & Zoom</b></option>
+                                        <option value="D173" data-input="text" data-help="D173"><b>Device Display: No. of Columns</b></option>
+                                        <option value="D172" data-input="text" data-help="D172"><b>Device Display: No. of Rows</b></option>
+                                        <option value="D243" data-input="display-fit" data-help="D243"><b>Device Display: Session Fit</b></option>
+                                    </select>
+
+                                    <br>
+
+                                    <label for="dataInput"><i class="fas fa-sliders-h"></i> Value</label>
+                                    <span id="dynamic-field"></span>
+
+                                    <br>
+
+                                    <button id="btn-add-data"><i class="fas fa-plus-square"></i> Add Client Setting</button>
+
+                                </div>
+
+                            </td>
+                            <td>&nbsp</td>
+                            <td>
+                                <div class="helpContainer">
+
+                                    <h2><i class="fa-solid fa-clipboard-question"></i> Setting Help</h2>
+                                    <div id="helpTextContainer"></div>
+                                </div>
+
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:top;">
+                                <div class="inputContainer">
+                                    <label for="bc-data">Client settings for deployment</label>
+                                    <textarea id="bc-data"></textarea>
+                                    <br />
+                                    <button id="btn-clear-data"><i class="fas fa-window-close"></i> Clear</button>
+                                    <button id="formButton">Generate QR Code</button>
+                                    <button id="btn-download">Download QR Code</button>
+                                </div>
+                            </td>
+                            <td>&nbsp</td>
+                            <td id="qrFrame">
+
+                                <div id="canvas"></div>
+                                <div id="bcValue"></div>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+
+        </div>
+
+        <!--Footer bar-->
+        <div id="footer"></div>
+        <!--end of Footer bar-->
+    </div>
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js" integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script type="text/javascript" src="qr-code-styling.js"></script>
+
+<script>
+    $(document).ready(function() {
+        let options = {
+            width: 300,
+            height: 300,
+            data: "",
+            image: "",
+            dotsOptions: {
+                color: "#000000",
+                type: "square",
+            }
+        };
+
+        // Removed due to length issues.
+        /*
+        options.qrOptions: {
+             typeNumber: 5,
+             errorCorrectionLevel: 'H',
+         };
+         */
+
+        const qrCode = new QRCodeStyling(options);
+
+
+        $("#btn-add-data").on("click", function() {
+            let data = $("#dataInput").val();
+            if (data.length == 0) {
+                alert("You must add some setting data");
+                return false;
+            }
+
+            data = `!${$("#settingId").val()}=${data}!`;
+
+            if ($("#bc-data").val() != "") {
+                $("#bc-data").val($("#bc-data").val() + "\r");
+            }
+
+            $("#bc-data").val($("#bc-data").val() + data);
+            $("#formButton").click();
+            return false;
+        });
+
+
+        $("#btn-clear-data").on("click", function() {
+            $("#bc-data").val("");
+            return false;
+        });
+
+        $("#btn-download").on("click", function() {
+            $("#formButton").click();
+            qrCode.download("jpeg");
+            return false;
+        });
+
+        $("#formButton").on("click", function() {
+            let rawData = $("#bc-data").val();
+            //replace !newline! with ~
+            let data = rawData.replace(/!\n!/g, "~");
+            document.getElementById('bcValue').innerHTML = "Barcode Data: <br>" + data;
+            if (data.length == 0) {
+                alert("You must add some setting data");
+                return false;
+            }
+            try {
+                qrCode.update({
+                    data: data
+                });
+            } catch (e) {
+                alert(e);
+            }
+            return false;
+        });
+
+        $("#settingId").on("change", function() {
+            // debugger;
+            let template = $("option:selected", this).data("input")
+            let help = $("option:selected", this).data("help")
+            console.log(help);
+
+            $("#dynamic-field").html(Handlebars.compile($(`#${template}-template`).html())());
+
+            // 'if statement' to check if 'help' exists
+            if (typeof help === "undefined") {
+
+                let help = "default";
+                $("#helpTextContainer").html(Handlebars.compile($(`#${help}-help-template`).html())());
+
+            } else {
+
+                $("#helpTextContainer").html(Handlebars.compile($(`#${help}-help-template`).html())());
+
+            }
+
+        });
+
+        $("#settingId").change();
+
+        qrCode.append(document.getElementById('canvas'));
+
+    });
+
+</script>
+
+</html>
