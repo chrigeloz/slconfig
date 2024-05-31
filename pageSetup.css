@@ -70,3 +70,23 @@
     width: 700px;
     
 }
+
+h1 {
+    width: var(--layoutWidth);
+    background: black;
+    color: white;
+    font-family: Arial;
+    font-size: 1.25em;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+h2 {
+    width: var(--layoutWidth);
+    background: white;
+    color: black;
+    font-family: Arial;
+    font-size: 1em;
+    padding: 5px;
+
+}

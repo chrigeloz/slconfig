@@ -28,6 +28,15 @@
             font-family: Arial;
         }
 
+        /*       p {
+            width: var(--layoutWidth);
+            background: green;
+            color: white;
+            font-family: Arial;
+            padding: 10px;
+            border-radius: 5px;
+        }
+*/
         p {
             display: flex;
             justify-content: space-between;
@@ -132,6 +141,8 @@
         input[type=number] {
             width: 87px;
 }
+
+        
 
         input[type=color] {
             

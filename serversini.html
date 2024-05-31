@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate servers.ini</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 0;
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+            width: 680px;
+        }
+
+        .sub-container {
+            margin-bottom: 20px;
+            margin-left: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #dbfff0;
+            width: 640px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        input,
+        select {
+            width: 97%;
+            padding: 8px;
+        }
+
+        .header {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        #topComment {
+            width: 680px;
+        }
+
+        #serverCount {
+            width: 200px;
+        }
+
+        .inline-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .inline-container select,
+        .inline-container input {
+            width: 45%;
+        }
+
+        button {
+            background: lightgrey;
+            color: black;
+            font-family: Arial, sans-serif;
+            height: 30px;
+            width: 200px;
+            border-radius: 12px;
+            border: 2px solid black;
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            font-size: 1em;
+            margin-bottom: 20px;
+        }
+
+        button:hover {
+            background: grey;
+            color: white;
+        }
+    </style>
+    <link rel="shortcut icon" href="https://www.staylinked.com/hs-fs/hub/410337/file-1410037798-ico/images/master-page-favicon.ico">
+    <link href="pageSetup.css" rel="stylesheet" />
+    <script src="jquery.min.js"></script>
+    <script src="scripts.js"></script>
+    <script src="https://kit.fontawesome.com/0ab842fff9.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="container">
+        <header id="title"></header>
+        <nav id="navbar"></nav>
+        <main>
+            <h2>Configure servers.ini for StayLinked</h2>
+            <div class="container">
+                <div>
+                    <label for="topComment">General Comment:</label>
+                    <input type="text" id="topComment" placeholder="Enter a general comment for the INI file">
+                </div>
+                <div>
+                    <label for="serverCount">Number of servers:</label>
+                    <input type="number" id="serverCount" min="1" max="100" value="1">
+                    <button type="button" onclick="generateForm()">Generate Form</button>
+                </div>
+                <form id="serverForm" onsubmit="generateINI(event)">
+                    <div id="connectionForms"></div>
+                    <div class="form-section">
+                        <div class="header">Options</div>
+                        <div class="sub-container">
+                            <label for="allow_quit">Allow Quit:</label>
+                            <select id="allow_quit" name="allow_quit">
+
+                                <option value="0">Disallow user quit on connection</option>
+                                <option value="1">Allow user quit on connection</option>
+                            </select>
+                            <label for="failover_optional">Failover Type:</label>
+                            <select id="failover_optional" name="failover_optional">
+                                <option value="2">Failover Automatic, no user input required</option>
+                                <option value="0">Failover Automatic, user confirmation required</option>
+                                <option value="1">Failover Optional, user confirmation required</option>
+                                
+                            </select>
+                            <label for="failover_retries">Failover Retries:</label>
+                            <input type="number" id="failover_retries" name="failover_retries" min="0" max="9" placeholder="Number of times to retry before failover to secondary server" required>
+                        </div>
+                    </div>
+                    <button type="submit">Generate servers.ini</button>
+                </form>
+            </div>
+        </main>
+        <footer id="footer"></footer>
+    </div>
+    <script>
+        function generateForm() {
+            const serverCount = document.getElementById('serverCount').value;
+            const form = document.getElementById('connectionForms');
+            form.innerHTML = ''; // Clear previous form inputs
+
+            for (let i = 1; i <= serverCount; i++) {
+                form.innerHTML += `
+                    <div class="form-section">
+                        <div class="header">StayLinked Primary/Backup pair ${i}</div>
+                        <div class="sub-container">
+                            <label for="server-comment_${i}">Server Comment:</label>
+                            <input type="text" id="server-comment_${i}" name="server-comment_${i}" placeholder="Enter a comment for StayLinked Primary/Backup pair ${i}">
+                            <label for="connection-name_${i}">Name for this connection:</label>
+                            <input type="text" id="connection-name_${i}" name="connection-name_${i}" placeholder="Friendly name for StayLinked Primary/Backup pair ${i}" required>
+                            <label for="primary-ip_${i}">Primary Server IP/Hostname:</label>
+                            <input type="text" id="primary-ip_${i}" name="primary-ip_${i}" placeholder="Primary StayLinked server IP/Hostname for server pair ${i}" required>
+                            <label for="primary-port_${i}">Primary Server Port:</label>
+                            <input type="number" id="primary-port_${i}" name="primary-port_${i}" placeholder="Primary StayLinked server port for server pair ${i}" required>
+                            <label for="secondary-ip_${i}">Secondary Server IP/Hostname:</label>
+                            <input type="text" id="secondary-ip_${i}" name="secondary-ip_${i}" placeholder="Secondary StayLinked server IP/Hostname for server pair ${i}" required>
+                            <label for="secondary-port_${i}">Secondary Server Port:</label>
+                            <input type="number" id="secondary-port_${i}" name="secondary-port_${i}" placeholder="Secondary StayLinked server port for server pair ${i}" required>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function generateINI(event) {
+            event.preventDefault();
+            const generalComment = document.getElementById('topComment').value.trim();
+            const serverCount = document.getElementById('serverCount').value;
+            let iniContent = '';
+
+            if (generalComment) {
+                iniContent += `# ${generalComment}\r\n`;
+            }
+
+            iniContent += `[servers]\r\n`;
+
+            for (let i = 1; i <= serverCount; i++) {
+                const serverComment = document.getElementById(`server-comment_${i}`).value.trim();
+                if (serverComment) {
+                    iniContent += `# ${serverComment}\r\n`;
+                }
+                const formfield1 = document.getElementById(`connection-name_${i}`).value;
+                const formfield2 = document.getElementById(`primary-ip_${i}`).value;
+                const formfield3 = document.getElementById(`primary-port_${i}`).value;
+                const formfield4 = document.getElementById(`secondary-ip_${i}`).value;
+                const formfield5 = document.getElementById(`secondary-port_${i}`).value;
+
+                iniContent += `server${i} = ${formfield1},${formfield2},${formfield3},${formfield4},${formfield5}\r\n`;
+            }
+
+            iniContent += `\r\n[options]\r\n`;
+            iniContent += `allow_quit = ${document.getElementById('allow_quit').value}\r\n`;
+            iniContent += `# 0 = Disallow Quit \r\n# 1 = Allow Quit\r\n\r\n`;
+            iniContent += `failover_optional = ${document.getElementById('failover_optional').value}\r\n`;
+            iniContent += `# 0 = Not optional, Not automatic \r\n# 1 = Is optional, Not automatic\r\n# 2 = Not optional, Is automatic\r\n\r\n`;
+            iniContent += `failover_retries = ${document.getElementById('failover_retries').value}\r\n`;
+            iniContent += `# number of retries before failover to secondary\r\n`;
+
+            downloadINI(iniContent);
+        }
+
+        function downloadINI(content) {
+            const blob = new Blob([content], { type: 'text/plain' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'servers.ini';
+            a.click();
+            URL.revokeObjectURL(a.href);
+        }
+    </script>
+</body>
+</html>

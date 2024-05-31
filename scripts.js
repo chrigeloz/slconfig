@@ -65,6 +65,10 @@ function generateIniFile() {
             name: "activate_hanshow",
             header: "[hanshow]\r\n"
         },
+		{
+            name: "activate_sso",
+            header: "[sso]\r\n"
+        },
         {
             name: "activate_nextthing",
             header: "[nextthing]\r\n"
@@ -136,8 +140,6 @@ function clearForm() {
     
     document.forms[0].reset();
     console.log("form reset");
-    
-
     /* // Clear text inputs and other fields
     $('#configForm input[type="text"], #configForm input[type="number"], #configForm textarea').val('');
     console.log("clearing form");

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>connections.ini builder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 0;
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+            width: 680px;
+        }
+        
+        .sub-container {
+            margin-bottom: 20px;
+            margin-left: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #dbfff0;
+            width: 640px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        input,
+        select {
+            width: 97%;
+            padding: 8px;
+        }
+
+        .header {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        #numConnections {
+            width: 200px;
+        }
+
+        #topComment {
+            width: 680px;
+        }
+
+        .inline-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .inline-container select,
+        .inline-container input {
+            width: 45%;
+        }
+
+        button {
+            background: lightgrey;
+            color: black;
+            font-family: Arial, sans-serif;
+            height: 30px;
+            width: 200px;
+            border-radius: 12px;
+            border: 2px solid black;
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            font-size: 1em;
+            margin-bottom: 20px;
+        }
+
+        button:hover {
+            background: grey;
+            color: white;
+        }
+
+        .keyboard-image {
+            width: 100%;
+            margin-top: 10px;
+        }
+    </style>
+
+    <link rel="shortcut icon" href="https://www.staylinked.com/hs-fs/hub/410337/file-1410037798-ico/images/master-page-favicon.ico">
+    <link href="pageSetup.css" rel="stylesheet" />
+
+    <script src="jquery.min.js"></script>
+    <script src="scripts.js"></script>
+    <script src="https://kit.fontawesome.com/0ab842fff9.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="container">
+        <header id="title"></header>
+        <nav id="navbar"></nav>
+
+        <main>
+            <h2>Configure connections.ini for StayLinked</h2>
+
+            <div>
+                <label for="topComment">General Comment:</label>
+                <input type="text" id="topComment" placeholder="Enter general comment for the INI file">
+            </div>
+            <div>
+                <label for="numConnections">Number of Connections:</label>
+                <input type="number" id="numConnections" min="1" max="10" value="3">
+                <button onclick="generateForms()">Generate Forms</button>
+            </div>
+            <br>
+            <div id="connectionForms"></div>
+
+            <div>
+                <button onclick="generateIniFile()">Generate connections.ini</button>
+            </div>
+        </main>
+
+        <footer id="footer"></footer>
+
+        <script>
+            function generateForms() {
+                const numberOfConnections = document.getElementById('numConnections').value;
+                const formsContainer = document.getElementById('connectionForms');
+                formsContainer.innerHTML = ''; // Clear previous forms if any
+
+                for (let i = 1; i <= numberOfConnections; i++) {
+                    const formSection = document.createElement('div');
+                    formSection.className = 'form-section';
+                    formSection.innerHTML = `
+                        <div class="header">Connection ${i}</div>
+                        <label>Comment: <input type="text" id="comment${i}" placeholder="Enter connection-specific comment"></label>
+                        
+                        <div class="sub-container">
+                        <label><i>StayLinked Server Connection Settings</i></label>
+                        <label>Name: <input type="text" id="name${i}" placeholder="Friendly name for connection ${i}"></label>
+                        <label>Server: <input type="text" id="server${i}" placeholder="StayLinked server IP/Hostname for connection ${i}"></label>
+                        <label>Port: <input type="number" id="port${i}" value="3006" placeholder="StayLinked server port for connection ${i}"></label>
+                        </div>
+                        <div class="sub-container">
+                        <label><i>StayLinked Client Behaviour Settings</i></label>
+                        <label>Columns: <input type="number" id="columns${i}" placeholder="Display columns for connection ${i}"></label>
+                        <label>Rows: <input type="number" id="rows${i}" placeholder="Display Rows for connection ${i}"></label>
+                        <label>Hotkey: <input type="text" id="hotkey${i}" placeholder="Quick selection hotkey for connection ${i}"></label>
+                        <label>Workstation/Device ID: <input type="text" id="deviceId${i}" placeholder="Device/Workstation ID for connection ${i}"></label>
+                        <label>Preferred Host Name: <input type="text" id="preferredHostName${i}" placeholder="Preferred Hostname to connect to for connection ${i}"></label>
+                        <label>Voice Grammar: <input type="text" id="voiceGrammar${i}" placeholder="Voice Grammar for connection ${i}"></label>
+                        <label>Keyboard Style Qwerty: 
+                            <div class="inline-container">
+                                <select id="keyboardStyleQwerty${i}" onchange="updateImage('qwerty', ${i})">
+                                    <option value=""></option>
+                                    <option value="0">Standard (Default)</option>
+                                    <option value="1">Small</option>
+                                    <option value="2">Azerty</option>
+                                    <option value="3">Full Screen</option>
+                                    <option value="4">4-Column Right</option>
+                                    <option value="5">4-Row Full</option>
+                                    <option value="6">4-Column Full</option>
+                                    <option value="7">Warehouse 1 Alpha - QWERTZ</option>
+                                    <option value="8">Warehouse 2 Alpha - QWERTY</option>
+                                    <option value="10">Custom Qwerty</option>
+                                    <option value="-1">Disabled</option>
+                                </select>
+                                <input type="text" id="keyboardStyleQwertyCustom${i}" placeholder="Or, enter filename (e.g., myqwerty.xml)">
+                            </div>
+                            <img id="keyboardStyleQwertyImg${i}" class="keyboard-image" src="" alt="Qwerty Keyboard Style Image">
+                        </label>
+                        <label>Keyboard Style NumSym:
+                            <div class="inline-container">
+                                <select id="keyboardStyleNumSym${i}" onchange="updateImage('numsym', ${i})">
+                                    <option value=""></option>
+                                    <option value="0">Standard (Default)</option>
+                                    <option value="1">Azerty</option>
+                                    <option value="2">Warehouse 1 Numpad</option>
+                                    <option value="10">Custom Number/Symbol</option>
+                                    <option value="-1">Disabled</option>
+                                </select>
+                                <input type="text" id="keyboardStyleNumSymCustom${i}" placeholder="Or, enter filename (e.g., mynumsym.xml)">
+                            </div>
+                            <img id="keyboardStyleNumSymImg${i}" class="keyboard-image" src="" alt="NumSym Keyboard Style Image">
+                        </label>
+                        <label>Keyboard Style Numpad:
+                            <div class="inline-container">
+                                <select id="keyboardStyleNumpad${i}" onchange="updateImage('numpad', ${i})">
+                                    <option value=""></option>
+                                    <option value="5">5-Row (Default)</option>
+                                    <option value="1">Full Screen</option>
+                                    <option value="2">2-Row</option>
+                                    <option value="3">3-Row</option>
+                                    <option value="4">2-Column Right</option>
+                                    <option value="6">3-Column Right</option>
+                                    <option value="10">Custom Numpad</option>
+                                    <option value="-1">Disabled</option>
+                                </select>
+                                <input type="text" id="keyboardStyleNumpadCustom${i}" placeholder="Or, enter filename (e.g., mynumpad.xml)">
+                            </div>
+                            <img id="keyboardStyleNumpadImg${i}" class="keyboard-image" src="" alt="Numpad Keyboard Style Image">
+                        </label>
+                        <label>Keyboard Style Ctrl:
+                            <div class="inline-container">
+                                <select id="keyboardStyleCtrl${i}" onchange="updateImage('ctrl', ${i})">
+                                    <option value=""></option>
+                                    <option value="0">Standard (Default)</option>
+                                    <option value="1">Warehouse 1 FKeys (F1 to F12)</option>
+                                    <option value="10">Custom Ctrl</option>
+                                    <option value="-1">Disabled</option>
+                                </select>
+                                <input type="text" id="keyboardStyleCtrlCustom${i}" placeholder="Or, enter filename (e.g., myctrl.xml)">
+                            </div>
+                            <img id="keyboardStyleCtrlImg${i}" class="keyboard-image" src="" alt="Ctrl Keyboard Style Image">
+                        </label>
+                        <label>Keyboard Style FKeys:
+                            <div class="inline-container">
+                                <select id="keyboardStyleFKeys${i}" onchange="updateImage('fkeys', ${i})">
+                                    <option value=""></option>
+                                    <option value="0">Standard (Default)</option>
+                                    <option value="1">Warehouse 1 FKeys (F13 to F24)</option>
+                                    <option value="10">Custom Function</option>
+                                    <option value="-1">Disabled</option>
+                                </select>
+                                <input type="text" id="keyboardStyleFKeysCustom${i}" placeholder="Or, enter filename (e.g., myfkeys.xml)">
+                            </div>
+                            <img id="keyboardStyleFKeysImg${i}" class="keyboard-image" src="" alt="FKeys Keyboard Style Image">
+                        </label>
+                        </div>
+                    `;
+                    formsContainer.appendChild(formSection);
+                }
+            }
+
+            function updateImage(type, index) {
+                const selectElement = document.getElementById(`keyboardStyle${capitalize(type)}${index}`);
+                const selectedValue = selectElement.value;
+                const imgElement = document.getElementById(`keyboardStyle${capitalize(type)}Img${index}`);
+                
+                if (selectedValue === "") {
+                    imgElement.src = "";
+                } else {
+                    imgElement.src = `${type}${selectedValue}.jpg`;
+                }
+            }
+
+            function capitalize(str) {
+                return str.charAt(0).toUpperCase() + str.slice(1);
+            }
+
+            function generateIniFile() {
+                const generalComment = document.getElementById('topComment').value.trim();
+                const numberOfConnections = document.getElementById('numConnections').value;
+                let output = generalComment ? `# ${generalComment}\r\n\r\n` : '';
+
+                for (let i = 1; i <= numberOfConnections; i++) {
+                    output += `[connection${i}]\r\n`;
+                    output += `# ${document.getElementById('comment' + i).value.trim()}\r\n`;
+                    output += `name = ${document.getElementById('name' + i).value.trim()}\r\n`;
+                    output += `server = ${document.getElementById('server' + i).value.trim()}\r\n`;
+                    output += `port = ${document.getElementById('port' + i).value.trim()}\r\n`;
+                    output += `columns = ${document.getElementById('columns' + i).value}\r\n`;
+                    output += `rows = ${document.getElementById('rows' + i).value}\r\n`;
+                    output += `hotkey = ${document.getElementById('hotkey' + i).value.trim()}\r\n`;
+                    output += `deviceid = ${document.getElementById('deviceId' + i).value.trim()}\r\n`;
+                    output += `preferred_host_name = ${document.getElementById('preferredHostName' + i).value.trim()}\r\n`;
+                    output += `voice_grammar = ${document.getElementById('voiceGrammar' + i).value.trim()}\r\n`;
+
+                    const keyboardStyleQwertySelect = document.getElementById('keyboardStyleQwerty' + i).value;
+                    const keyboardStyleQwertyCustom = document.getElementById('keyboardStyleQwertyCustom' + i).value.trim();
+                    const keyboardStyleQwerty = keyboardStyleQwertyCustom || keyboardStyleQwertySelect;
+                    output += `keyboard_style_qwerty = ${keyboardStyleQwerty}\r\n`;
+
+                    const keyboardStyleNumSymSelect = document.getElementById('keyboardStyleNumSym' + i).value;
+                    const keyboardStyleNumSymCustom = document.getElementById('keyboardStyleNumSymCustom' + i).value.trim();
+                    const keyboardStyleNumSym = keyboardStyleNumSymCustom || keyboardStyleNumSymSelect;
+                    output += `keyboard_style_numsym = ${keyboardStyleNumSym}\r\n`;
+
+                    const keyboardStyleNumpadSelect = document.getElementById('keyboardStyleNumpad' + i).value;
+                    const keyboardStyleNumpadCustom = document.getElementById('keyboardStyleNumpadCustom' + i).value.trim();
+                    const keyboardStyleNumpad = keyboardStyleNumpadCustom || keyboardStyleNumpadSelect;
+                    output += `keyboard_style_numpad = ${keyboardStyleNumpad}\r\n`;
+
+                    const keyboardStyleCtrlSelect = document.getElementById('keyboardStyleCtrl' + i).value;
+                    const keyboardStyleCtrlCustom = document.getElementById('keyboardStyleCtrlCustom' + i).value.trim();
+                    const keyboardStyleCtrl = keyboardStyleCtrlCustom || keyboardStyleCtrlSelect;
+                    output += `keyboard_style_ctrl = ${keyboardStyleCtrl}\r\n`;
+
+                    const keyboardStyleFKeysSelect = document.getElementById('keyboardStyleFKeys' + i).value;
+                    const keyboardStyleFKeysCustom = document.getElementById('keyboardStyleFKeysCustom' + i).value.trim();
+                    const keyboardStyleFKeys = keyboardStyleFKeysCustom || keyboardStyleFKeysSelect;
+                    output += `keyboard_style_fkeys = ${keyboardStyleFKeys}\r\n\r\n`;
+                }
+
+                const blob = new Blob([output], { type: 'text/plain' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'connections.ini';
+                link.click();
+            }
+        </script>
+    </div>
+</body>
+</html>

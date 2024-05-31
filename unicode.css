@@ -1,14 +1,18 @@
         #inputText {
             font-size: 2em;
             font-family: arial;
+			width: 690px;
         }
 
         #unicodeOutput {
             font-size: 1em;
+			color: darkgreen;
             font-family: consolas;
-            width: auto;
-            height: 50px;
+            max-width: 690px;
+            height: auto;
+			overflow-wrap: break-word;
         }
+
 
         body {
             font-size: 1em;
